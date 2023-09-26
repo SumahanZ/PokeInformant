@@ -9,14 +9,26 @@ import SwiftUI
 import SegmentedPicker
 
 enum PokedexFilterOptions {
-    case pokemon, move, region, item
+    case pokemon, move, item
 }
 
 struct PokedexView: View {
     @State private var isAnimating: Bool = false
     @State private var searchText: String = ""
     @State var selectedIndex: Int?
-    private let filterOptions: [String] = ["Pokemons", "Moves", "Regions", "Items"]
+    private let filterOptions: [String] = ["Pokemons", "Moves", "Items"]
+    /*
+     Computed properties act as a @Binding/@State if it is passed down
+     */
+    private var selectedOption: PokedexFilterOptions {
+        if selectedIndex == 0 {
+            return .pokemon
+        } else if selectedIndex == 1 {
+            return .move
+        } else {
+            return .item
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -104,7 +116,7 @@ extension PokedexView {
                 content: { item, isSelected in
                     Text(item)
                         .foregroundColor(isSelected ? Color.black : Color.gray )
-                        .padding(.horizontal, 15)
+                        .padding(.horizontal, 30)
                         .padding(.vertical, 8)
                         .font(.callout)
                 },
@@ -120,7 +132,7 @@ extension PokedexView {
             }
             .animation(.spring(blendDuration: 0.3), value: selectedIndex)
             
-            PokedexGrid(selectedTab: .pokemon)
+            PokedexGrid(selectedTab: selectedOption)
         }
     }
 }

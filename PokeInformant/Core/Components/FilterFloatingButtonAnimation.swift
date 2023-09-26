@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FilterFloatingButtonAnimation: View {
-    //TODO: Animate radiating effect and navigate after 2 seconds
     @Binding var isAnimating: Bool
     
     var body: some View {
